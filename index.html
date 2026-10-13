@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Sotuv Audit – kirish</title>
+<style>
+  :root { color-scheme: light dark; --bg:#f6f6f3; --fg:#111; --muted:#777; --acc:#2a78d6; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0d0d0d; --fg:#f4f4f1; --muted:#999; --acc:#3987e5; } }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; background:var(--bg); color:var(--fg); padding:16px; box-sizing:border-box; }
+  main { max-width:420px; text-align:center; }
+  a { color:var(--acc); font-weight:600; word-break:break-all; }
+  p { color:var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Sotuv Audit</h1>
+  <p id="m">Saytga yo'naltirilmoqda…</p>
+  <p><a id="l" href="#" hidden>Saytni ochish</a></p>
+</main>
+<script>
+  // Joriy manzil url.txt da; keshni chetlab o'tish uchun har safar yangi so'rov
+  fetch('url.txt?t=' + Date.now(), { cache: 'no-store' })
+    .then(function (r) { return r.text(); })
+    .then(function (u) {
+      u = u.trim();
+      if (!/^https:\/\/[a-z0-9.-]+\.trycloudflare\.com\/?$/.test(u)) throw new Error('manzil yo\'q');
+      var l = document.getElementById('l'); l.href = u; l.textContent = u; l.hidden = false;
+      location.replace(u + location.hash);
+    })
+    .catch(function () {
+      document.getElementById('m').textContent = "Sayt hozir o'chiq (ofis kompyuteri o'chirilgan bo'lishi mumkin). Birozdan keyin qayta urinib ko'ring.";
+    });
+</script>
+</body>
+</html>
